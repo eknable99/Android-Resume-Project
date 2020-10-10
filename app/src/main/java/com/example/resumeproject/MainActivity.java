@@ -6,11 +6,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -23,11 +25,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Intent fromAnotherActivity = getIntent();
-//       // Map<String, Float> ratingsMap = new HashMap<>();
-//        float rating = fromAnotherActivity.getFloatExtra("id1", 3);
         RatingBar ratingBarSmall = findViewById(R.id.ratingBarSmall);
         ratingBarSmall.setRating(RatingActivity.getData());
+
+        SharedPreferences recentPrefs = getSharedPreferences("RECENTPREFS", MODE_PRIVATE);
+
+        TextView recentComment = findViewById(R.id.recentComment);
+        recentComment.setText(recentPrefs.getString("VALUE", "No Recent Comments"));
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -36,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
         else {
             Toast.makeText(this, "Please Update Your Android Version", Toast.LENGTH_LONG).show();
         }
-
-
-//        getSupportFragmentManager().beginTransaction().add(R.id.mainLayoutId, new TestFragment()).commit();
     }
 
 
